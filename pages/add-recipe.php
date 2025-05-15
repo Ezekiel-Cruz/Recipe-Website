@@ -21,7 +21,11 @@ $categories = getCategories();
         
         <?php if (isset($_GET['error'])): ?>
             <div class="alert alert-danger">
-                There was an error submitting your recipe. Please try again.
+                <?php if (isset($_SESSION['upload_error'])): ?>
+                    <?php echo $_SESSION['upload_error']; unset($_SESSION['upload_error']); ?>
+                <?php else: ?>
+                    There was an error submitting your recipe. Please try again.
+                <?php endif; ?>
             </div>
         <?php endif; ?>
         
