@@ -1,5 +1,5 @@
 -- MySQL dump - Recipe Website Database Setup
--- Version 1.0
+-- Version 2.0 (consolidated on May 15, 2025)
 
 -- Create database
 CREATE DATABASE IF NOT EXISTS `recipe_website`;
@@ -33,8 +33,13 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `ingredients` text NOT NULL,
   `instructions` text NOT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `notes` text DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `category_id` int(11) DEFAULT NULL,
+  `difficulty` varchar(50) DEFAULT NULL,
+  `prep_time` int(11) DEFAULT NULL,
+  `cook_time` int(11) DEFAULT NULL,
+  `servings` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -60,3 +65,13 @@ INSERT INTO `categories` (`name`) VALUES
 -- Sample user (password: password123)
 INSERT INTO `users` (`username`, `email`, `password`) VALUES
 ('test_user', 'test@example.com', '$2y$10$PNxXN6BFzUzXH.M00j9/PeM0rnsGQIP.Fd3dL5UpZPDdFF0Zzz0PW');
+
+-- Updates for existing installations
+-- Reset categories if needed (add or run this separately if updating an existing installation)
+-- First, ensure recipes using non-existent categories are set to NULL
+UPDATE `recipes` SET `category_id` = NULL WHERE `category_id` NOT IN (
+    SELECT `id` FROM `categories` WHERE `name` IN (
+        'Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Dessert', 
+        'Appetizer', 'Side Dish', 'Beverage / Drinks', 'Soup', 'Salad'
+    )
+);

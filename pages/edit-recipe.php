@@ -23,13 +23,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ingredients = $_POST['ingredients'] ?? '';
     $instructions = $_POST['instructions'] ?? '';
     $category_id = $_POST['category_id'] ?? null;
+    $difficulty = $_POST['difficulty'] ?? null;
+    $prep_time = $_POST['prep_time'] ?? null;
+    $cook_time = $_POST['cook_time'] ?? null;
+    $servings = $_POST['servings'] ?? null;
+    $notes = $_POST['notes'] ?? null;
 
-    $stmt = $pdo->prepare("UPDATE recipes SET title = :title, ingredients = :ingredients, instructions = :instructions, category_id = :category_id, updated_at = NOW() WHERE id = :id");
+    $stmt = $pdo->prepare("UPDATE recipes SET 
+                title = :title, 
+                ingredients = :ingredients, 
+                instructions = :instructions, 
+                category_id = :category_id, 
+                difficulty = :difficulty, 
+                prep_time = :prep_time, 
+                cook_time = :cook_time, 
+                servings = :servings, 
+                notes = :notes, 
+                updated_at = NOW() 
+            WHERE id = :id");
+    
     $stmt->execute([
         'title' => $title,
         'ingredients' => $ingredients,
         'instructions' => $instructions,
         'category_id' => $category_id,
+        'difficulty' => $difficulty,
+        'prep_time' => $prep_time,
+        'cook_time' => $cook_time,
+        'servings' => $servings,
+        'notes' => $notes,
         'id' => $recipe_id
     ]);
 
@@ -82,6 +104,33 @@ $categories = getCategories();
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty</label>
+                            <select id="difficulty" name="difficulty">
+                                <option value="">Select difficulty</option>
+                                <option value="Easy" <?= ($recipe['difficulty'] == 'Easy') ? 'selected' : '' ?>>Easy</option>
+                                <option value="Medium" <?= ($recipe['difficulty'] == 'Medium') ? 'selected' : '' ?>>Medium</option>
+                                <option value="Hard" <?= ($recipe['difficulty'] == 'Hard') ? 'selected' : '' ?>>Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prep_time">Preparation Time (minutes)</label>
+                            <input type="number" id="prep_time" name="prep_time" min="1" value="<?= htmlspecialchars($recipe['prep_time'] ?? '') ?>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cook_time">Cooking Time (minutes)</label>
+                            <input type="number" id="cook_time" name="cook_time" min="0" value="<?= htmlspecialchars($recipe['cook_time'] ?? '') ?>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="servings">Servings</label>
+                            <input type="number" id="servings" name="servings" min="1" value="<?= htmlspecialchars($recipe['servings'] ?? '') ?>">
+                        </div>
                     </div>
                 </div>
                 
@@ -98,6 +147,14 @@ $categories = getCategories();
                     <div class="form-group">
                         <label for="instructions">Cooking Instructions</label>
                         <textarea id="instructions" name="instructions" rows="10" required><?= htmlspecialchars($recipe['instructions']) ?></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3><i class="fas fa-sticky-note"></i> Additional Notes</h3>
+                    <div class="form-group">
+                        <label for="notes">Notes (Optional)</label>
+                        <textarea id="notes" name="notes" rows="4"><?= htmlspecialchars($recipe['notes'] ?? '') ?></textarea>
                     </div>
                 </div>
                 

@@ -27,7 +27,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="<?php echo $rootPath; ?>pages/home.php">Home</a></li>
-                    <li><a href="<?php echo $rootPath; ?>pages/categories.php">Categories</a></li>
+                    <li><a href="<?php echo $rootPath; ?>pages/recipes-categories.php">Recipes & Categories</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li><a href="<?php echo $rootPath; ?>pages/add-recipe.php">Add Recipe</a></li>
                         <li><a href="<?php echo $rootPath; ?>pages/profile.php">My Profile</a></li>
@@ -49,6 +49,11 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="#"><i class="fab fa-youtube"></i></a></li>
             </ul>
         </div>
+    </div>
+    
+    <!-- Back to top button -->
+    <div class="back-to-top">
+        <button id="backToTopBtn" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
     </div>
 </footer>
 

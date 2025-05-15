@@ -38,8 +38,41 @@ class Category {
     }
 
     public function getAllCategories() {
-        // This is an alias for getCategories() for compatibility
+        // This method is maintained for backward compatibility
         return $this->getCategories();
     }
+    
+    public function getTopCategories($limit = 5) {
+        try {
+            // Query to get categories with the most recipes
+            $query = "SELECT c.id, c.name, COUNT(r.id) as recipe_count, 
+                      CASE 
+                        WHEN c.name = 'Breakfast' THEN 'fas fa-coffee'
+                        WHEN c.name = 'Lunch' THEN 'fas fa-hamburger'
+                        WHEN c.name = 'Dinner' THEN 'fas fa-utensils'
+                        WHEN c.name = 'Snacks' THEN 'fas fa-apple-alt'
+                        WHEN c.name = 'Dessert' THEN 'fas fa-cookie'
+                        WHEN c.name = 'Appetizer' THEN 'fas fa-cheese'
+                        WHEN c.name = 'Side Dish' THEN 'fas fa-bread-slice'
+                        WHEN c.name = 'Beverage' OR c.name = 'Drinks' THEN 'fas fa-glass-martini-alt'
+                        WHEN c.name = 'Soup' THEN 'fas fa-mug-hot'
+                        WHEN c.name = 'Salad' THEN 'fas fa-leaf'
+                        ELSE 'fas fa-utensils'
+                      END as icon
+                     FROM categories c
+                     LEFT JOIN recipes r ON c.id = r.category_id
+                     GROUP BY c.id
+                     ORDER BY recipe_count DESC
+                     LIMIT :limit";
+            
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error getting top categories: " . $e->getMessage());
+            return [];
+        }
+    }
 }
-?>

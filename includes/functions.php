@@ -1,5 +1,7 @@
 <?php
-// functions.php
+// functions.php - Legacy utility functions
+// Note: Many of these functions are now duplicated in class-based alternatives
+// Prefer using classes (Recipe, User, Category) for new code
 
 function connectDatabase() {
     $host = 'localhost';
@@ -35,7 +37,14 @@ function getUserById($id) {
     $pdo = connectDatabase();
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->execute([$id]);
-    return $stmt->fetch();
+    $user = $stmt->fetch();
+    
+    // Add error logging if user not found
+    if (!$user) {
+        error_log("User with ID $id not found in database");
+    }
+    
+    return $user;
 }
 
 function loginUser($email, $password) {
@@ -71,12 +80,15 @@ function registerUser($username, $email, $password) {
 }
 
 function addRecipe($title, $ingredients, $instructions, $userId) {
+    // Note: Consider using the Recipe class for new code
+    // This function doesn't support newer fields like difficulty, prep_time, etc.
     $pdo = connectDatabase();
     $stmt = $pdo->prepare("INSERT INTO recipes (title, ingredients, instructions, user_id) VALUES (?, ?, ?, ?)");
     return $stmt->execute([$title, $ingredients, $instructions, $userId]);
 }
 
 function getCategories() {
+    // Note: Consider using the Category class for new code
     $pdo = connectDatabase();
     $stmt = $pdo->query("SELECT * FROM categories");
     return $stmt->fetchAll();
@@ -84,8 +96,13 @@ function getCategories() {
 
 function getUserRecipes($userId) {
     $pdo = connectDatabase();
-    $stmt = $pdo->prepare("SELECT * FROM recipes WHERE user_id = ? ORDER BY created_at DESC");
-    $stmt->execute([$userId]);
-    return $stmt->fetchAll();
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM recipes WHERE user_id = ? ORDER BY created_at DESC");
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll();
+    } catch (\PDOException $e) {
+        error_log("Error fetching recipes for user $userId: " . $e->getMessage());
+        return [];
+    }
 }
 ?>
