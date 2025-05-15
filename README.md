@@ -29,6 +29,9 @@ recipe-website
 │       └── fonts.css
 ├── config
 │   └── database.php
+├── database
+│   ├── schema.sql
+│   └── init_db.php
 ├── includes
 │   ├── header.php
 │   ├── footer.php
@@ -51,28 +54,36 @@ recipe-website
 ├── api
 │   └── recipes.php
 ├── index.php
-├── database.sql
 ├── .htaccess
 └── README.md
 ```
 
 ## Installation
 1. Clone the repository to your local machine.
-2. Set up a database using the `database.sql` file.
-3. Update the `config/database.php` file with your database credentials.
+2. Set up a database using one of these methods:
+   - Run the provided database initialization script: `php database/init_db.php`
+   - Manually import the SQL schema: `mysql -u root < database/schema.sql`
+3. Update the `config/database.php` file with your database credentials if different from defaults.
 4. Run the application on a local server (e.g., XAMPP, WAMP).
 5. Access the website via your browser at `http://localhost/recipe-website`.
+
+## Default Login
+After installation, you can login with the default test account:
+- Username: test_user
+- Password: password123
 
 ## Usage
 - Users can sign up for an account or log in to access their profiles.
 - Users can add new recipes, view recipes by category, and manage their submitted recipes.
 
 ## Recent Updates
+- Reorganized database files into a dedicated `database` directory
+- Added automated database initialization script (`init_db.php`)
+- Combined all SQL schema into a single consolidated file
 - Combined recipes and categories browsing into a single interface
 - Enhanced recipe display with metadata (difficulty, prep/cook time, servings, etc.)
 - Added Popular Categories section with animation effects
 - Made both Recipe Categories and Popular Categories sections responsive and equal in size
-- Consolidated SQL scripts into a single `database.sql` file
 - Moved CSS to dedicated files for better organization
 - Added back-to-top button for better user experience
 - Updated navigation links in header and footer
