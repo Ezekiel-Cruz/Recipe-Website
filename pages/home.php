@@ -22,7 +22,7 @@ include('../includes/header.php');
 <div class="container">
     <section class="featured-section">
         <h2 class="text-center">New Recipes</h2>
-        <div class="recipe-list">
+        <div class="recipe-grid">
             <?php
             include_once('../config/database.php');
             include_once('../classes/Recipe.php');
@@ -36,28 +36,41 @@ include('../includes/header.php');
                 foreach ($newestRecipes as $recipeItem) {
                     // Define possible image paths
                     $recipeImage = $recipeItem['image'] ?? '';
-                    $imagePath = $rootPath . "uploads/recipes/" . ($recipeImage ?: 'sample-recipe.jpg');
-                    $defaultImagePath = $rootPath . "assets/img/default-recipe.jpg";
+                    $imagePath = $rootPath . "uploads/recipes/" . $recipeImage;
                     
-                    // Use a placeholder URL for demonstration purposes
-                    $placeholderUrl = "https://via.placeholder.com/300x200?text=Recipe+Image";
+                    echo '<div class="recipe-card">
+                        <div class="recipe-header">';
                     
-                    // Get the image display path
-                    $displayImagePath = file_exists($_SERVER['DOCUMENT_ROOT'] . '/recipe-website/uploads/recipes/' . $recipeImage) ? $imagePath : $placeholderUrl;
+                    if (!empty($recipeImage)) {
+                        echo '<img src="' . $imagePath . '" alt="' . htmlspecialchars($recipeItem['title']) . '">';
+                    } else {
+                        echo '<div class="no-image">No Image</div>';
+                    }
                     
-                    // Format the date
-                    $recipeDate = date("F j, Y", strtotime($recipeItem['created_at']));
+                    if (!empty($recipeItem['category_name'])) {
+                        echo '<span class="category-badge">' . htmlspecialchars($recipeItem['category_name']) . '</span>';
+                    }
                     
-                    echo '<div class="recipe-item hover-grow">
-                        <a href="' . $rootPath . 'pages/recipe-detail.php?id=' . $recipeItem['id'] . '">
-                            <img src="' . $displayImagePath . '" alt="' . htmlspecialchars($recipeItem['title']) . '">
-                        </a>
-                        <div class="recipe-content">
-                            <h3><a href="' . $rootPath . 'pages/recipe-detail.php?id=' . $recipeItem['id'] . '">' . htmlspecialchars($recipeItem['title']) . '</a></h3>
-                            <div class="recipe-meta">
-                                <span><i class="far fa-calendar-alt"></i> ' . $recipeDate . '</span>
-                                <span><i class="far fa-user"></i> ' . htmlspecialchars($recipeItem['author'] ?? 'Unknown') . '</span>
-                            </div>
+                    echo '</div>
+                        <div class="recipe-body">
+                            <h3>' . htmlspecialchars($recipeItem['title']) . '</h3>
+                            <p class="recipe-meta">
+                                <span><i class="fas fa-user"></i> ' . htmlspecialchars($recipeItem['author'] ?? 'Unknown') . '</span>';
+                    
+                    if (!empty($recipeItem['difficulty'])) {
+                        echo '<span><i class="fas fa-signal"></i> ' . htmlspecialchars($recipeItem['difficulty']) . '</span>';
+                    }
+                    
+                    if (!empty($recipeItem['prep_time'])) {
+                        echo '<span><i class="far fa-clock"></i> Prep: ' . htmlspecialchars($recipeItem['prep_time']) . ' min</span>';
+                    }
+                    
+                    if (!empty($recipeItem['cook_time'])) {
+                        echo '<span><i class="fas fa-fire"></i> Cook: ' . htmlspecialchars($recipeItem['cook_time']) . ' min</span>';
+                    }
+                    
+                    echo '</p>
+                            <a href="' . $rootPath . 'pages/recipe-detail.php?id=' . $recipeItem['id'] . '" class="btn-outline">View Recipe</a>
                         </div>
                     </div>';
                 }
