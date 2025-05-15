@@ -156,29 +156,42 @@ class Recipe {
         }
         
         // Define the upload directory path properly for XAMPP
-        $uploadDir = dirname(dirname(__FILE__)) . '/uploads/recipes/';
+        $uploadDir = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'recipes' . DIRECTORY_SEPARATOR;
         
         // Log path for debugging
         error_log("Upload directory path: " . $uploadDir);
         
         // Check if upload directory exists, if not create it
         if (!file_exists($uploadDir)) {
+            error_log("Creating upload directory: " . $uploadDir);
             if (!mkdir($uploadDir, 0777, true)) {
-                error_log("Failed to create directory: " . $uploadDir);
+                error_log("Failed to create directory: " . $uploadDir . " - " . error_get_last()['message']);
                 return false;
             }
         }
         
+        // Force set permissions to ensure directory is writable
+        @chmod($uploadDir, 0777);
+        
         // Check if directory is writable
         if (!is_writable($uploadDir)) {
-            error_log("Directory is not writable: " . $uploadDir);
-            chmod($uploadDir, 0777);
+            error_log("Directory is still not writable after chmod: " . $uploadDir);
+            return false;
+        } else {
+            error_log("Directory is writable: " . $uploadDir);
         }
         
         // Generate a unique filename with random element to avoid collisions
-        $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $uniqueId = uniqid(rand(), true);
-        $filename = 'recipe_' . $uniqueId . '.' . $fileExtension;
+        $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        // Only allow specific image extensions
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            error_log("File extension not allowed: " . $fileExtension);
+            return false;
+        }
+        
+        $uniqueId = uniqid('recipe_', true);
+        $filename = $uniqueId . '.' . $fileExtension;
         $targetFilePath = $uploadDir . $filename;
         
         error_log("Target file path: " . $targetFilePath);
