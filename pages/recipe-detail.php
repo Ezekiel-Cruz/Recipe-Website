@@ -5,6 +5,38 @@ include '../includes/header.php';
 include '../config/database.php';
 include '../classes/Recipe.php';
 
+// Process comment submission
+if (isset($_POST['submit_comment']) && isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id'];
+    $recipeId = $_GET['id'] ?? 0;
+    $commentText = trim($_POST['comment']);
+    
+    if (!empty($commentText) && $recipeId > 0) {
+        try {
+            // Insert comment into database
+            $stmt = $pdo->prepare("INSERT INTO comments (recipe_id, user_id, comment_text, created_at) 
+                                  VALUES (:recipe_id, :user_id, :comment_text, NOW())");
+            $stmt->bindParam(':recipe_id', $recipeId, PDO::PARAM_INT);
+            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmt->bindParam(':comment_text', $commentText);
+            
+            if ($stmt->execute()) {
+                // Comment added successfully
+                // Redirect to avoid form resubmission
+                header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $recipeId . "&comment_added=1");
+                exit;
+            } else {
+                $errorMsg = "Failed to add comment. Please try again.";
+            }
+        } catch (PDOException $e) {
+            $errorMsg = "Database error: " . $e->getMessage();
+            error_log($e->getMessage());
+        }
+    } else {
+        $errorMsg = "Comment cannot be empty";
+    }
+}
+
 $recipeId = $_GET['id'] ?? null;
 
 if ($recipeId) {
@@ -12,11 +44,12 @@ if ($recipeId) {
     $recipeDetails = $recipe->getRecipeById($recipeId);
 
     if ($recipeDetails) {
-        // For demo purposes, create some sample data if fields are missing
+        // Get actual values from the database
         $createdDate = date("F j, Y", strtotime($recipeDetails['created_at'] ?? "now"));
         $author = $recipeDetails['author'] ?? "John Doe";
         $authorId = $recipeDetails['user_id'] ?? 1;
-        $cookTime = $recipeDetails['cook_time'] ?? "30 mins";
+        $prepTime = $recipeDetails['prep_time'] ?? 0;
+        $cookTime = $recipeDetails['cook_time'] ?? 0;
         $servings = $recipeDetails['servings'] ?? "4";
         $category = $recipeDetails['category_name'] ?? "Main Course";
         $difficulty = $recipeDetails['difficulty'] ?? "Medium";
@@ -29,7 +62,8 @@ if ($recipeId) {
                     <div class="recipe-meta">
                         <span class="recipe-meta-item"><i class="far fa-calendar-alt"></i> <?php echo $createdDate; ?></span>
                         <span class="recipe-meta-item"><i class="far fa-user"></i> By <a href="<?php echo $rootPath; ?>pages/profile.php?id=<?php echo $authorId; ?>"><?php echo htmlspecialchars($author); ?></a></span>
-                        <span class="recipe-meta-item"><i class="far fa-clock"></i> <?php echo $cookTime; ?></span>
+                        <span class="recipe-meta-item"><i class="fas fa-hourglass-start"></i> Prep: <?php echo $prepTime; ?> mins</span>
+                        <span class="recipe-meta-item"><i class="far fa-clock"></i> Cook: <?php echo $cookTime; ?> mins</span>
                         <span class="recipe-meta-item"><i class="fas fa-utensils"></i> <?php echo $servings; ?> servings</span>
                     </div>
                 </div>
@@ -56,18 +90,7 @@ if ($recipeId) {
                 </div>
                 
                 <div class="recipe-actions">
-                    <button class="btn-outline"><i class="far fa-bookmark"></i> Save</button>
-                    <button class="btn-outline"><i class="fas fa-print"></i> Print</button>
-                    <button class="btn-outline"><i class="fas fa-share-alt"></i> Share</button>
-                    
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <span>(4.0)</span>
-                    </div>
+                    <!-- Rating removed as requested -->
                 </div>
                 
                 <div class="recipe-content">
@@ -111,15 +134,27 @@ if ($recipeId) {
             </div>
             
             <div class="comments-section">
-                <h2>Comments (3)</h2>
+                <h2>Comments</h2>
+                
+                <?php if (isset($errorMsg)): ?>
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> <?php echo $errorMsg; ?>
+                </div>
+                <?php endif; ?>
+                
+                <?php if (isset($_GET['comment_added']) && $_GET['comment_added'] == 1): ?>
+                <div class="success-message">
+                    <i class="fas fa-check-circle"></i> Your comment has been added successfully.
+                </div>
+                <?php endif; ?>
                 
                 <?php if (isset($_SESSION['user_id'])): ?>
                 <div class="comment-form">
-                    <form action="#" method="POST">
+                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $recipeId; ?>" method="POST">
                         <div class="form-group">
                             <textarea name="comment" placeholder="Share your thoughts or experience with this recipe..." required></textarea>
                         </div>
-                        <button type="submit" class="btn">Post Comment</button>
+                        <button type="submit" name="submit_comment" class="btn">Post Comment</button>
                     </form>
                 </div>
                 <?php else: ?>
@@ -129,66 +164,48 @@ if ($recipeId) {
                 <?php endif; ?>
                 
                 <div class="comments-list">
-                    <!-- Sample comments for display purposes -->
-                    <div class="comment">
-                        <div class="comment-header">
-                            <span class="comment-author">Jane Smith</span>
-                            <span class="comment-date">May 10, 2025</span>
-                        </div>
-                        <div class="comment-body">
-                            <p>I made this recipe last night and it was delicious! My family loved it.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="comment">
-                        <div class="comment-header">
-                            <span class="comment-author">Mike Johnson</span>
-                            <span class="comment-date">May 8, 2025</span>
-                        </div>
-                        <div class="comment-body">
-                            <p>Great recipe! I added a bit more garlic and it turned out perfect.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="comment">
-                        <div class="comment-header">
-                            <span class="comment-author">Sarah Williams</span>
-                            <span class="comment-date">May 5, 2025</span>
-                        </div>
-                        <div class="comment-body">
-                            <p>I've made this three times now and it never disappoints. My new go-to recipe!</p>
-                        </div>
-                    </div>
+                    <?php
+                    // Fetch comments for this recipe
+                    try {
+                        $commentsStmt = $pdo->prepare("
+                            SELECT c.*, u.username as author_name 
+                            FROM comments c
+                            LEFT JOIN users u ON c.user_id = u.id
+                            WHERE c.recipe_id = :recipe_id
+                            ORDER BY c.created_at DESC
+                        ");
+                        $commentsStmt->bindParam(':recipe_id', $recipeId, PDO::PARAM_INT);
+                        $commentsStmt->execute();
+                        $comments = $commentsStmt->fetchAll(PDO::FETCH_ASSOC);
+                        
+                        if (count($comments) > 0) {
+                            foreach ($comments as $comment) {
+                                $commentDate = date("F j, Y", strtotime($comment['created_at']));
+                                echo '<div class="comment">
+                                    <div class="comment-header">
+                                        <span class="comment-author">' . htmlspecialchars($comment['author_name']) . '</span>
+                                        <span class="comment-date">' . $commentDate . '</span>
+                                    </div>
+                                    <div class="comment-body">
+                                        <p>' . htmlspecialchars($comment['comment_text']) . '</p>
+                                    </div>
+                                </div>';
+                            }
+                        } else {
+                            echo '<p>No comments yet. Be the first to comment!</p>';
+                        }
+                    } catch (PDOException $e) {
+                        echo '<p>Unable to load comments at this time.</p>';
+                        error_log($e->getMessage());
+                    }
+                    ?>
                 </div>
             </div>
             
             <div class="related-recipes">
                 <h2>You Might Also Like</h2>
                 <div class="recipe-list">
-                    <!-- Sample related recipes -->
-                    <div class="recipe-item hover-grow">
-                        <img src="<?php echo $rootPath; ?>uploads/recipes/sample-recipe.jpg" alt="Related Recipe">
-                        <div class="recipe-content">
-                            <h3><a href="<?php echo $rootPath; ?>pages/recipe-detail.php?id=2">Italian Pasta Carbonara</a></h3>
-                            <p>A classic Italian pasta dish with a creamy egg sauce.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="recipe-item hover-grow">
-                        <img src="<?php echo $rootPath; ?>uploads/recipes/sample-recipe.jpg" alt="Related Recipe">
-                        <div class="recipe-content">
-                            <h3><a href="<?php echo $rootPath; ?>pages/recipe-detail.php?id=3">Grilled Lemon Herb Chicken</a></h3>
-                            <p>Juicy grilled chicken with fresh herbs and lemon.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="recipe-item hover-grow">
-                        <img src="<?php echo $rootPath; ?>uploads/recipes/sample-recipe.jpg" alt="Related Recipe">
-                        <div class="recipe-content">
-                            <h3><a href="<?php echo $rootPath; ?>pages/recipe-detail.php?id=4">Vegetable Stir Fry</a></h3>
-                            <p>A quick and healthy vegetable stir fry with a savory sauce.</p>
-                        </div>
-                    </div>
+                    <!-- Related recipes will be loaded dynamically from the database -->
                 </div>
             </div>
         </div>

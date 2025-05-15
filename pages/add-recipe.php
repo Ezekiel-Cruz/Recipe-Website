@@ -19,6 +19,18 @@ $categories = getCategories();
         <h1 class="text-center">Share Your Recipe</h1>
         <p class="text-center mb-2">Fill in the details below to share your delicious recipe with our community</p>
         
+        <?php if (isset($_GET['error'])): ?>
+            <div class="alert alert-danger">
+                There was an error submitting your recipe. Please try again.
+            </div>
+        <?php endif; ?>
+        
+        <?php if (isset($_GET['success'])): ?>
+            <div class="alert alert-success">
+                Your recipe has been submitted successfully! <a href="<?php echo $rootPath; ?>pages/recipes-categories.php">View all recipes</a>
+            </div>
+        <?php endif; ?>
+        
         <form action="<?php echo $rootPath; ?>api/recipes.php" method="POST" enctype="multipart/form-data" class="recipe-form">
             <div class="form-section">
                 <h3><i class="fas fa-info-circle"></i> Basic Information</h3>

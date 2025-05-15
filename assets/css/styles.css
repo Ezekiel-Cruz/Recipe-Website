@@ -107,6 +107,12 @@ nav a:hover {
     margin-top: 30px;
 }
 
+/* For empty state centering */
+.recipe-list:has(.empty-state) {
+    display: block;
+    text-align: center;
+}
+
 .recipe-item {
     background: white;
     border-radius: var(--border-radius);
@@ -638,12 +644,20 @@ button:hover, .btn:hover {
     gap: 15px;
     list-style: none;
     padding: 0;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 90%;
+    justify-content: center;
+}
+
+.category-list li {
+    display: flex;
+    justify-content: center;
 }
 
 .category-list li a {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 12px 15px;
     background-color: white;
     border-radius: var(--border-radius);
@@ -651,12 +665,17 @@ button:hover, .btn:hover {
     text-decoration: none;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     transition: var(--transition);
+    width: 100%;
+    text-align: center;
 }
 
 .category-list li a i {
     margin-right: 8px;
     color: var(--primary-color);
     font-size: 1.2em;
+    min-width: 20px;
+    text-align: center;
+    display: inline-block;
 }
 
 .category-list li a:hover {
@@ -907,27 +926,6 @@ footer {
     margin-bottom: 10px;
 }
 
-.remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.remember-forgot label {
-    display: inline;
-    margin-left: 5px;
-}
-
-.forgot-password {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
-}
 
 .btn-block {
     display: block;

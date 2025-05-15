@@ -21,6 +21,12 @@ if ($pagesCount > 0) {
     <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/fonts/fonts.css">
     <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/css/main.css">
     <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/css/styles.css">
+    <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/css/alerts.css">
+    <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/css/recipes.css">
+    <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/css/profile.css">
+    <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/css/featured-recipes.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -29,7 +35,7 @@ if ($pagesCount > 0) {
             <nav>
                 <ul>
                     <li><a href="<?php echo $rootPath; ?>pages/home.php"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="<?php echo $rootPath; ?>pages/categories.php"><i class="fas fa-list"></i> Categories</a></li>
+                    <li><a href="<?php echo $rootPath; ?>pages/recipes-categories.php"><i class="fas fa-book-open"></i> Recipes & Categories</a></li>
                     
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li><a href="<?php echo $rootPath; ?>pages/add-recipe.php"><i class="fas fa-plus-circle"></i> Add Recipe</a></li>

@@ -5,8 +5,11 @@ This is a modern recipe website that allows users to browse, add, and manage rec
 
 ## Features
 - **Home**: Displays featured recipes and categories.
-- **Add Recipe**: A form for users to submit new recipes.
-- **Categories**: Lists all available recipe categories.
+- **Add Recipe**: A form for users to submit new recipes with details like:
+  - Title, ingredients, instructions
+  - Difficulty level, preparation time, cooking time
+  - Images and notes
+- **Recipes & Categories**: Combined interface to browse all recipes and filter by category.
 - **My Profile**: Shows user profile information and submitted recipes.
 - **Login**: Allows users to log into their accounts.
 - **Sign Up**: Registration form for new users.
@@ -17,7 +20,9 @@ recipe-website
 ├── assets
 │   ├── css
 │   │   ├── main.css
-│   │   └── styles.css
+│   │   ├── styles.css
+│   │   ├── alerts.css
+│   │   └── recipes.css
 │   ├── js
 │   │   └── scripts.js
 │   └── fonts
@@ -31,7 +36,7 @@ recipe-website
 ├── pages
 │   ├── home.php
 │   ├── add-recipe.php
-│   ├── categories.php
+│   ├── recipes-categories.php
 │   ├── profile.php
 │   ├── login.php
 │   ├── signup.php
@@ -46,19 +51,40 @@ recipe-website
 ├── api
 │   └── recipes.php
 ├── index.php
+├── database.sql
 ├── .htaccess
 └── README.md
 ```
 
 ## Installation
 1. Clone the repository to your local machine.
-2. Set up a database and update the `config/database.php` file with your database credentials.
-3. Run the application on a local server (e.g., XAMPP, WAMP).
-4. Access the website via your browser at `http://localhost/recipe-website`.
+2. Set up a database using the `database.sql` file.
+3. Update the `config/database.php` file with your database credentials.
+4. Run the application on a local server (e.g., XAMPP, WAMP).
+5. Access the website via your browser at `http://localhost/recipe-website`.
 
 ## Usage
 - Users can sign up for an account or log in to access their profiles.
-- Users can add new recipes, view categories, and manage their submitted recipes.
+- Users can add new recipes, view recipes by category, and manage their submitted recipes.
+
+## Recent Updates
+- Combined recipes and categories browsing into a single interface
+- Enhanced recipe display with metadata (difficulty, prep/cook time, servings, etc.)
+- Added Popular Categories section with animation effects
+- Made both Recipe Categories and Popular Categories sections responsive and equal in size
+- Consolidated SQL scripts into a single `database.sql` file
+- Moved CSS to dedicated files for better organization
+- Added back-to-top button for better user experience
+- Updated navigation links in header and footer
+- Removed duplicate files and functions
+
+## Class-Based Design
+The application is moving towards a class-based architecture:
+- `Recipe` class for recipe management
+- `User` class for user authentication and profiles
+- `Category` class for recipe categorization
+
+Legacy procedural functions are still available in `includes/functions.php` for backward compatibility.
 
 ## Contributing
 Feel free to fork the repository and submit pull requests for any improvements or features you'd like to add.

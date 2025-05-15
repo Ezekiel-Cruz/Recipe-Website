@@ -12,6 +12,10 @@ class Recipe {
     public $db;
     public $image;
     public $notes;
+    public $difficulty;
+    public $prep_time;
+    public $cook_time;
+    public $servings;
 
     // Constructor with optional parameters for a flexible API
     public function __construct($db, $title = null, $ingredients = null, $instructions = null, $category_id = null, $user_id = null) {
@@ -25,14 +29,22 @@ class Recipe {
             $this->user_id = $user_id;
             $this->created_at = date("Y-m-d H:i:s");
             $this->updated_at = date("Y-m-d H:i:s");
+            
+            // Initialize additional fields with default values
+            $this->difficulty = null;
+            $this->prep_time = null;
+            $this->cook_time = null;
+            $this->servings = null;
+            $this->notes = null;
+            $this->image = null;
         }
     }
 
     public function save() {
         // Code to save the recipe to the database
         try {
-            $stmt = $this->db->prepare("INSERT INTO recipes (title, ingredients, instructions, category_id, user_id, image, notes) 
-                                        VALUES (:title, :ingredients, :instructions, :category_id, :user_id, :image, :notes)");
+            $stmt = $this->db->prepare("INSERT INTO recipes (title, ingredients, instructions, category_id, user_id, image, notes, difficulty, prep_time, cook_time, servings) 
+                                        VALUES (:title, :ingredients, :instructions, :category_id, :user_id, :image, :notes, :difficulty, :prep_time, :cook_time, :servings)");
             
             $stmt->bindParam(':title', $this->title);
             $stmt->bindParam(':ingredients', $this->ingredients);
@@ -41,9 +53,33 @@ class Recipe {
             $stmt->bindParam(':user_id', $this->user_id);
             $stmt->bindParam(':image', $this->image);
             $stmt->bindParam(':notes', $this->notes);
+            $stmt->bindParam(':difficulty', $this->difficulty);
+            $stmt->bindParam(':prep_time', $this->prep_time);
+            $stmt->bindParam(':cook_time', $this->cook_time);
+            $stmt->bindParam(':servings', $this->servings);
             
-            return $stmt->execute();
+            // Debug log for values being saved
+            error_log("Recipe data to save: " . json_encode([
+                'title' => $this->title,
+                'ingredients' => substr($this->ingredients, 0, 100) . '...',
+                'category_id' => $this->category_id,
+                'user_id' => $this->user_id,
+                'difficulty' => $this->difficulty,
+                'prep_time' => $this->prep_time,
+                'cook_time' => $this->cook_time,
+                'servings' => $this->servings
+            ]));
+            
+            $result = $stmt->execute();
+            if ($result) {
+                $this->id = $this->db->lastInsertId();
+                error_log("Recipe saved with ID: " . $this->id);
+            } else {
+                error_log("Database error: " . print_r($stmt->errorInfo(), true));
+            }
+            return $result;
         } catch (PDOException $e) {
+            error_log("PDO Exception: " . $e->getMessage());
             return false;
         }
     }
@@ -58,6 +94,10 @@ class Recipe {
                                         category_id = :category_id,
                                         image = :image,
                                         notes = :notes,
+                                        difficulty = :difficulty,
+                                        prep_time = :prep_time,
+                                        cook_time = :cook_time,
+                                        servings = :servings,
                                         updated_at = NOW()
                                         WHERE id = :id AND user_id = :user_id");
             
@@ -67,6 +107,10 @@ class Recipe {
             $stmt->bindParam(':category_id', $this->category_id);
             $stmt->bindParam(':image', $this->image);
             $stmt->bindParam(':notes', $this->notes);
+            $stmt->bindParam(':difficulty', $this->difficulty);
+            $stmt->bindParam(':prep_time', $this->prep_time);
+            $stmt->bindParam(':cook_time', $this->cook_time);
+            $stmt->bindParam(':servings', $this->servings);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':user_id', $this->user_id);
             
@@ -98,33 +142,68 @@ class Recipe {
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            error_log("Recipe::getRecipeById Error: " . $e->getMessage());
             return null;
         }
     }
     
     // Method to handle image uploads
     public function uploadImage($file) {
-        // Check if upload directory exists, if not create it
-        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/recipe-website/uploads/recipes/';
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
+        // Check if there was an upload error
+        if($file['error'] !== UPLOAD_ERR_OK) {
+            error_log("Upload error code: " . $file['error']);
+            return false;
         }
         
-        // Generate a unique filename
-        $filename = 'recipe_' . time() . '_' . basename($file['name']);
+        // Define the upload directory path properly for XAMPP
+        $uploadDir = dirname(dirname(__FILE__)) . '/uploads/recipes/';
+        
+        // Log path for debugging
+        error_log("Upload directory path: " . $uploadDir);
+        
+        // Check if upload directory exists, if not create it
+        if (!file_exists($uploadDir)) {
+            if (!mkdir($uploadDir, 0777, true)) {
+                error_log("Failed to create directory: " . $uploadDir);
+                return false;
+            }
+        }
+        
+        // Check if directory is writable
+        if (!is_writable($uploadDir)) {
+            error_log("Directory is not writable: " . $uploadDir);
+            chmod($uploadDir, 0777);
+        }
+        
+        // Generate a unique filename with random element to avoid collisions
+        $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $uniqueId = uniqid(rand(), true);
+        $filename = 'recipe_' . $uniqueId . '.' . $fileExtension;
         $targetFilePath = $uploadDir . $filename;
         
-        // Check if image file is a actual image
-        $check = getimagesize($file['tmp_name']);
-        if($check === false) {
+        error_log("Target file path: " . $targetFilePath);
+        error_log("Temp file path: " . $file['tmp_name']);
+        
+        // Check if image file is an actual image
+        $check = @getimagesize($file['tmp_name']);
+        if ($check === false) {
+            error_log("File is not a valid image");
+            return false;
+        }
+        
+        // Check file size (< 5MB)
+        if ($file['size'] > 5 * 1024 * 1024) {
+            error_log("File too large: " . $file['size'] . " bytes");
             return false;
         }
         
         // Upload file
         if (move_uploaded_file($file['tmp_name'], $targetFilePath)) {
             $this->image = $filename;
+            error_log("File successfully uploaded to: " . $targetFilePath);
             return true;
         } else {
+            error_log("Failed to move uploaded file. Last error: " . error_get_last()['message']);
             return false;
         }
     }
@@ -239,13 +318,19 @@ class Recipe {
         }
     }
     
-    public function getFeaturedRecipes($limit = 6) {
+    public function getNewestRecipes($limit = 6) {
         try {
-            $stmt = $this->db->prepare("SELECT r.*, u.username as author FROM recipes r JOIN users u ON r.user_id = u.id ORDER BY r.created_at DESC LIMIT :limit");
+            $stmt = $this->db->prepare("SELECT r.*, u.username as author, c.name as category_name 
+                                       FROM recipes r 
+                                       LEFT JOIN users u ON r.user_id = u.id 
+                                       LEFT JOIN categories c ON r.category_id = c.id 
+                                       ORDER BY r.created_at DESC 
+                                       LIMIT :limit");
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            error_log("Error getting newest recipes: " . $e->getMessage());
             return [];
         }
     }

@@ -10,13 +10,8 @@ $redirect = $_GET['redirect'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $remember = isset($_POST['remember']) ? true : false;
 
     if (loginUser($email, $password)) {
-        // Set a longer cookie if remember me was checked
-        if ($remember) {
-            setcookie('user_email', $email, time() + (86400 * 30), "/"); // 30 days
-        }
         
         // Redirect to the requested page if set, otherwise to home
         if (!empty($redirect)) {
@@ -57,15 +52,6 @@ include('../includes/header.php');
                 <div class="form-group">
                     <label for="password"><i class="fas fa-lock"></i> Password</label>
                     <input type="password" id="password" name="password" placeholder="Your password" required>
-                </div>
-                <div class="form-group">
-                    <div class="remember-forgot">
-                        <div>
-                            <input type="checkbox" id="remember" name="remember">
-                            <label for="remember">Remember me</label>
-                        </div>
-                        <a href="<?php echo $rootPath; ?>pages/reset-password.php" class="forgot-password">Forgot password?</a>
-                    </div>
                 </div>
                 <button type="submit" class="btn-block">Login <i class="fas fa-sign-in-alt"></i></button>
             </form>

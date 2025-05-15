@@ -49,9 +49,26 @@ switch ($method) {
                 $_POST['title'],
                 $_POST['ingredients'],
                 $_POST['instructions'],
-                $_POST['category_id'] ?? null,
+                $_POST['category'] ?? null,
                 $_SESSION['user_id']
             );
+            
+            // Handle additional fields
+            if (isset($_POST['difficulty'])) {
+                $recipe->difficulty = $_POST['difficulty'];
+            }
+            
+            if (isset($_POST['prep_time'])) {
+                $recipe->prep_time = $_POST['prep_time'];
+            }
+            
+            if (isset($_POST['cook_time'])) {
+                $recipe->cook_time = $_POST['cook_time'];
+            }
+            
+            if (isset($_POST['servings'])) {
+                $recipe->servings = $_POST['servings'];
+            }
             
             // Handle notes if provided
             if (isset($_POST['notes'])) {
@@ -59,21 +76,48 @@ switch ($method) {
             }
             
             // Handle image upload
-            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                $recipe->uploadImage($_FILES['image']);
+            if (isset($_FILES['image'])) {
+                if ($_FILES['image']['error'] == 0) {
+                    if (!$recipe->uploadImage($_FILES['image'])) {
+                        error_log("Image upload failed: " . print_r($_FILES['image'], true));
+                    } else {
+                        error_log("Image uploaded successfully");
+                    }
+                } else {
+                    // Log the upload error
+                    $errorMessages = [
+                        UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload_max_filesize directive in php.ini.",
+                        UPLOAD_ERR_FORM_SIZE => "The uploaded file exceeds the MAX_FILE_SIZE directive in the HTML form.",
+                        UPLOAD_ERR_PARTIAL => "The uploaded file was only partially uploaded.",
+                        UPLOAD_ERR_NO_FILE => "No file was uploaded.",
+                        UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
+                        UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
+                        UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload."
+                    ];
+                    
+                    $errorMessage = isset($errorMessages[$_FILES['image']['error']]) ? 
+                                    $errorMessages[$_FILES['image']['error']] : 
+                                    "Unknown upload error";
+                    
+                    error_log("Image upload error: " . $errorMessage);
+                }
             }
             
             if ($recipe->save()) {
                 if ($isApiCall) {
                     echo json_encode(["message" => "Recipe created successfully."]);
                 } else {
-                    header('Location: ../pages/home.php?success=1');
+                    // Log successful save
+                    error_log("Recipe saved successfully. Recipe ID: " . $recipe->id);
+                    header('Location: ../pages/recipes-categories.php?success=1');
                     exit();
                 }
             } else {
                 if ($isApiCall) {
                     echo json_encode(["error" => "Failed to create recipe."]);
                 } else {
+                    // Log error for debugging
+                    error_log("Failed to save recipe: " . print_r($_POST, true));
                     header('Location: ../pages/add-recipe.php?error=1');
                     exit();
                 }
