@@ -76,12 +76,16 @@ switch ($method) {
             }
             
             // Handle image upload
-            if (isset($_FILES['image'])) {
+            if (isset($_FILES['image']) && $_FILES['image']['name'] !== '') {
+                error_log("Image upload attempt: " . print_r($_FILES['image'], true));
+                
                 if ($_FILES['image']['error'] == 0) {
                     if (!$recipe->uploadImage($_FILES['image'])) {
                         error_log("Image upload failed: " . print_r($_FILES['image'], true));
+                        // Store error in session for display
+                        $_SESSION['upload_error'] = "Failed to upload image. Please try again with a different image.";
                     } else {
-                        error_log("Image uploaded successfully");
+                        error_log("Image uploaded successfully: " . $recipe->image);
                     }
                 } else {
                     // Log the upload error
@@ -98,6 +102,10 @@ switch ($method) {
                     $errorMessage = isset($errorMessages[$_FILES['image']['error']]) ? 
                                     $errorMessages[$_FILES['image']['error']] : 
                                     "Unknown upload error";
+                    
+                    error_log("Image upload error: " . $errorMessage);
+                    // Store error in session for display
+                    $_SESSION['upload_error'] = "Image upload error: " . $errorMessage;
                     
                     error_log("Image upload error: " . $errorMessage);
                 }
