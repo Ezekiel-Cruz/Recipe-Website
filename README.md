@@ -77,6 +77,16 @@ After installation, you can login with the default test account:
 - Users can add new recipes, view recipes by category, and manage their submitted recipes.
 
 ## Recent Updates
+
+### Profile System Fixes and Improvements (May 2025)
+- **Removed profile image system** to simplify the user experience and reduce potential bugs
+- **Enhanced profile page styling** with improved cards and animations
+- **Fixed alignment** of edit and delete buttons in the profile page
+- **Improved mobile responsiveness** across the profile system
+- **Cleaned up codebase** by removing duplicate files and redundant code
+- **Added modern styling** to the edit profile modal and forms
+
+### Previous Updates
 - Reorganized database files into a dedicated `database` directory
 - Added automated database initialization script (`init_db.php`)
 - Combined all SQL schema into a single consolidated file

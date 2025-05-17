@@ -1,0 +1,149 @@
+/* Enhanced styling for recipe action buttons */
+
+.recipe-actions {
+    display: flex;
+    margin-top: 15px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+/* View Recipe button */
+.recipe-actions .btn-outline {
+    padding: 8px 15px;
+    text-align: center;
+    background-color: #fff;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    font-weight: 500;
+    flex: 1;
+    min-width: 70px;
+    max-width: 90px;
+}
+
+.recipe-actions .btn-outline:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Edit and Delete buttons */
+.recipe-actions .btn-edit,
+.recipe-actions .btn-delete {
+    padding: 8px 15px;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s;
+    flex: 1;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 70px;
+    max-width: 90px;
+}
+
+.recipe-actions .btn-edit {
+    background-color: #fff;
+    color: #2196F3;
+    border: 1px solid #2196F3;
+}
+
+.recipe-actions .btn-edit:hover {
+    background-color: #2196F3;
+    color: white;
+}
+
+.recipe-actions .btn-delete {
+    background-color: #fff;
+    color: #F44336;
+    border: 1px solid #F44336;
+}
+
+.recipe-actions .btn-delete:hover {
+    background-color: #F44336;
+    color: white;
+}
+
+.recipe-actions i {
+    margin-right: 5px;
+}
+
+/* Medium screens */
+@media (min-width: 601px) and (max-width: 900px) {
+    .recipe-actions {
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+    .recipe-actions {
+        flex-wrap: nowrap;
+        gap: 8px;
+        justify-content: center;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .recipe-actions {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+    
+    .recipe-actions .btn-outline,
+    .recipe-actions .btn-edit,
+    .recipe-actions .btn-delete {
+        flex: 1;
+    }
+}
+
+/* Fix recipe card body spacing */
+.recipe-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe-body h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* Make the actions container stick to the bottom */
+.recipe-card {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.recipe-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.recipe-meta {
+    margin-bottom: auto;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.recipe-actions {
+    margin-top: auto;
+    padding-top: 15px;
+    justify-content: center;
+}

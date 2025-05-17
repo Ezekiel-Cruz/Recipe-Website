@@ -99,10 +99,6 @@ $categories = getCategories();
                 <div class="form-group">
                     <textarea id="ingredients" name="ingredients" rows="8" placeholder="Enter ingredients, one per line" required></textarea>
                 </div>
-                
-                <button type="button" class="btn-outline btn-sm add-ingredient-btn">
-                    <i class="fas fa-plus"></i> Add Another Ingredient
-                </button>
             </div>
             
             <div class="form-section">
@@ -156,14 +152,8 @@ $categories = getCategories();
             }
         });
         
-        // Add ingredient button functionality
-        const addIngredientBtn = document.querySelector('.add-ingredient-btn');
+        // Initialize ingredients textarea
         const ingredientsTextarea = document.getElementById('ingredients');
-        
-        addIngredientBtn.addEventListener('click', function() {
-            ingredientsTextarea.value += ingredientsTextarea.value ? '\n' : '';
-            ingredientsTextarea.focus();
-        });
     });
 </script>
 

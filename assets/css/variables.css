@@ -1,0 +1,60 @@
+/* CSS Variables for Recipe Website */
+:root {
+    /* Colors */
+    --primary-color: #4CAF50;
+    --primary-hover: #45a049;
+    --secondary-color: #e74c3c; /* Red color for pagination active button */
+    --secondary-hover: #c0392b;
+    --text-color: #333;
+    --text-light: #666;
+    --text-lighter: #999;
+    --background-light: #f9f9f9;
+    --background-lighter: #f5f5f5;
+    --white: #fff;
+    --border-color: #ddd;
+    --border-hover: #ccc;
+    --border-light: #eee;
+    --disabled-color: #ccc;
+    --success-color: #2ecc71;
+    --info-color: #3498db;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    
+    /* Spacing */
+    --spacing-xxs: 3px;
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 25px;
+    --spacing-xxl: 30px;
+    
+    /* Typography */
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Montserrat', sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.85rem;
+    --font-size-base: 1rem;
+    --font-size-md: 1.1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-xxl: 2rem;
+    
+    /* Borders */
+    --border-radius-sm: 3px;
+    --border-radius: 5px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 10px;
+    --border-radius-xl: 15px;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow: 0 4px 8px rgba(0,0,0,0.1);
+    --shadow-md: 0 6px 12px rgba(0,0,0,0.15);
+    --shadow-lg: 0 8px 16px rgba(0,0,0,0.2);
+    
+    /* Animations */
+    --transition-fast: 0.2s ease;
+    --transition: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}

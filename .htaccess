@@ -1,0 +1,16 @@
+# The contents of the file: /recipe-website/recipe-website/.htaccess
+
+RewriteEngine On
+
+# Redirect to the index.php file for all requests
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+
+# Enable URL rewriting for pretty URLs
+RewriteRule ^recipe/([0-9]+)/?$ pages/recipe-detail.php?id=$1 [L,QSA]
+RewriteRule ^category/([a-zA-Z0-9_-]+)/?$ pages/categories.php?category=$1 [L,QSA]
+RewriteRule ^add-recipe/?$ pages/add-recipe.php [L,QSA]
+RewriteRule ^profile/?$ pages/profile.php [L,QSA]
+RewriteRule ^login/?$ pages/login.php [L,QSA]
+RewriteRule ^signup/?$ pages/signup.php [L,QSA]

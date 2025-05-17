@@ -1,0 +1,146 @@
+/* Hero section with wooden background effect - increased specificity */
+body .hero-section {
+    background: linear-gradient(rgba(121, 85, 72, 0.6), rgba(121, 85, 72, 0.7)), url('../img/cooking-background.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    color: white !important;
+    padding: 120px 0 !important;
+    margin-bottom: 60px !important;
+    text-align: center !important;
+    position: relative !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Hero content without background box */
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    margin-bottom: 20px;
+    color: white;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Hero buttons with improved styling - perfectly centered */
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Browse Recipes button (coral/red) */
+.hero-buttons .btn {
+    background-color: #ff6b6b !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 35px !important;
+    border-radius: 50px !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    min-width: 170px !important;
+    text-align: center !important;
+}
+
+.hero-buttons .btn:hover {
+    background-color: #ff5252 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Share Your Recipe button (green outline) */
+.hero-buttons .btn-outline {
+    background-color: transparent !important;
+    border: 2px solid #4ecdc4 !important;
+    color: white !important;
+    padding: 12px 35px !important;
+    border-radius: 50px !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    min-width: 170px !important;
+    text-align: center !important;
+}
+
+.hero-buttons .btn-outline:hover {
+    background-color: #4ecdc4 !important;
+    color: white !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    body .hero-section {
+        padding: 80px 0 !important;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem !important;
+        padding: 0 15px !important;
+    }
+      .hero-buttons {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 0 20px !important;
+        width: 90% !important;
+        max-width: 300px !important;
+        margin: 0 auto !important;
+    }
+    
+    .hero-buttons .btn,
+    .hero-buttons .btn-outline {
+        width: 100% !important;
+        margin-bottom: 15px !important;
+        text-align: center !important;
+    }
+      .hero-content {
+        padding: 20px !important;
+        margin: 0 auto !important;
+        max-width: 90% !important;
+    }
+}
+
+/* Animation for buttons */
+.fade-in {
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

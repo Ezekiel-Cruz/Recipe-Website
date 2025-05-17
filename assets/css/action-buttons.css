@@ -1,0 +1,152 @@
+/* Action Buttons (View, Edit, Delete) Styling */
+/* Designed to match the screenshots */
+
+/* Common styles for all action buttons */
+.recipe-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    gap: 8px;
+}
+
+.recipe-actions a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    flex: 1;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    white-space: nowrap;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-width: 80px;
+    max-width: 120px; /* Set maximum width to maintain consistency */
+    height: 36px; /* Fixed height to match design in screenshots */
+}
+
+/* Icon styling */
+.recipe-actions a i {
+    margin-right: 5px;
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 2; /* Ensure icon stays above ripple effect */
+}
+
+/* "View" button - green outline */
+.recipe-actions .btn-outline,
+.recipe-actions a[href*="recipe-detail.php"] {
+    background-color: white;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.recipe-actions .btn-outline:hover,
+.recipe-actions a[href*="recipe-detail.php"]:hover {
+    background-color: #4CAF50;
+    color: white !important;
+    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+}
+
+.recipe-actions .btn-outline:hover i,
+.recipe-actions a[href*="recipe-detail.php"]:hover i {
+    color: white;
+}
+
+/* "Edit" button - blue outline */
+.recipe-actions .btn-edit,
+.recipe-actions a[href*="edit-recipe.php"] {
+    background-color: white;
+    color: #2196F3;
+    border: 1px solid #2196F3;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.recipe-actions .btn-edit:hover,
+.recipe-actions a[href*="edit-recipe.php"]:hover {
+    background-color: #2196F3;
+    color: white !important;
+    box-shadow: 0 2px 5px rgba(33, 150, 243, 0.3);
+}
+
+.recipe-actions .btn-edit:hover i,
+.recipe-actions a[href*="edit-recipe.php"]:hover i {
+    color: white;
+}
+
+/* "Delete" button - red outline */
+.recipe-actions .btn-delete,
+.recipe-actions a[href*="delete_recipe"] {
+    background-color: white;
+    color: #F44336;
+    border: 1px solid #F44336;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.recipe-actions .btn-delete:hover,
+.recipe-actions a[href*="delete_recipe"]:hover {
+    background-color: #F44336;
+    color: white !important;
+    box-shadow: 0 2px 5px rgba(244, 67, 54, 0.3);
+}
+
+.recipe-actions .btn-delete:hover i,
+.recipe-actions a[href*="delete_recipe"]:hover i {
+    color: white;
+}
+
+/* Button hover effects */
+.recipe-actions a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: left 0.3s ease;
+    pointer-events: none;
+}
+
+.recipe-actions a:hover::before {
+    left: 0;
+}
+
+/* Remove any transform hover effects from other CSS files */
+.recipe-actions a:hover {
+    transform: none !important;
+}
+
+/* Medium screens */
+@media (min-width: 577px) and (max-width: 768px) {
+    .recipe-actions {
+        justify-content: center;
+    }
+    
+    .recipe-actions a {
+        min-width: 70px;
+        max-width: 100px;
+    }
+}
+
+/* Fix for mobile displays */
+@media (max-width: 576px) {
+    .recipe-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .recipe-actions a {
+        margin: 3px;
+        min-width: 100px;
+        max-width: none;
+        width: calc(50% - 6px); /* 2 buttons per row with margin */
+    }
+}

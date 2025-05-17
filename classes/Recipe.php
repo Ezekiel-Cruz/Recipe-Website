@@ -121,12 +121,29 @@ class Recipe {
     }
 
     public function delete($id) {
-        // Code to delete the recipe from the database
+        // First get the recipe to delete its image if needed
         try {
+            // Get recipe details to find the image filename
+            $stmt = $this->db->prepare("SELECT image FROM recipes WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // Delete the associated image if it exists
+            if ($recipe && !empty($recipe['image'])) {
+                $imagePath = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'recipes' . DIRECTORY_SEPARATOR . $recipe['image'];
+                if (file_exists($imagePath)) {
+                    @unlink($imagePath);
+                    error_log("Deleted image file: " . $imagePath);
+                }
+            }
+            
+            // Delete the recipe from the database
             $stmt = $this->db->prepare("DELETE FROM recipes WHERE id = :id");
             $stmt->bindParam(':id', $id);
             return $stmt->execute();
         } catch (PDOException $e) {
+            error_log("Error deleting recipe: " . $e->getMessage());
             return false;
         }
     }
@@ -328,6 +345,34 @@ class Recipe {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return [];
+        }
+    }
+    
+    public function deleteRecipe($recipeId) {
+        try {
+            // First, get image file info if it exists
+            $stmt = $this->db->prepare("SELECT image FROM recipes WHERE id = :id");
+            $stmt->bindParam(':id', $recipeId);
+            $stmt->execute();
+            $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // Delete the recipe record
+            $stmt = $this->db->prepare("DELETE FROM recipes WHERE id = :id");
+            $stmt->bindParam(':id', $recipeId);
+            $result = $stmt->execute();
+            
+            // If deletion successful and there was an image, try to delete the image file too
+            if ($result && !empty($recipe['image'])) {
+                $imagePath = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'recipes' . DIRECTORY_SEPARATOR . $recipe['image'];
+                if (file_exists($imagePath)) {
+                    @unlink($imagePath); // Delete the file (suppress errors)
+                }
+            }
+            
+            return $result;
+        } catch (PDOException $e) {
+            error_log("Error deleting recipe: " . $e->getMessage());
+            return false;
         }
     }
     

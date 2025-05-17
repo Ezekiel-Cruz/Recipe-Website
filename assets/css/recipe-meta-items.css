@@ -1,0 +1,97 @@
+/* Recipe Meta Items styling for horizontal row layout */
+
+/* Recipe header modifications */
+.recipe-header {
+    position: relative;
+    margin-bottom: -5px;
+    height: 150px;
+}
+
+/* Force horizontal layout for all recipe meta items */
+body .recipe-meta {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+/* Recipe title adjustments */
+.recipe-title {
+    margin-bottom: 10px !important;
+}
+
+/* All meta items in horizontal row */
+.recipe-meta {
+    display: flex;
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    justify-content: flex-start;
+    border-bottom: 1px dotted #eee;
+}
+
+/* Hide the scrollbar but keep functionality */
+.recipe-meta::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+/* Style for each meta item */
+.recipe-meta-item {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    color: var(--gray-color);
+}
+
+/* Make the first three items more prominent */
+.recipe-meta-item:nth-child(-n+3) {
+    font-weight: 500;
+}
+
+/* Secondary meta items (ensure they're also in a horizontal row) */
+.recipe-meta-secondary {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    border-bottom: none;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    opacity: 0.85;
+}
+
+/* Icon styling */
+.recipe-meta-item i {
+    margin-right: 5px;
+}
+
+/* Override mobile responsive settings to reinforce horizontal layout */
+@media (max-width: 768px) {
+    .recipe-meta, 
+    .recipe-meta-secondary {
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        gap: 12px;
+        padding-bottom: 5px;
+        display: flex !important;
+        white-space: nowrap !important;
+        overflow-x: auto !important;
+    }
+    
+    .recipe-meta {
+        margin-bottom: 5px;
+    }
+    
+    .recipe-meta-secondary {
+        margin-bottom: 15px;
+    }
+    
+    .recipe-meta-item {
+        font-size: 0.85rem;
+        display: inline-flex !important;
+    }
+}

@@ -29,11 +29,22 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updateProfile($id, $username, $email) {
-        $stmt = $this->db->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
-        return $stmt->execute([$username, $email, $id]);
+    public function updateProfile($id, $username, $email, $bio = null) {
+        $sql = "UPDATE users SET username = ?, email = ?";
+        $params = [$username, $email];
+        
+        if ($bio !== null) {
+            $sql .= ", bio = ?";
+            $params[] = $bio;
+        }
+        
+        $sql .= " WHERE id = ?";
+        $params[] = $id;
+        
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($params);
     }
-
+    
     public function deleteUser($id) {
         $stmt = $this->db->prepare("DELETE FROM users WHERE id = ?");
         return $stmt->execute([$id]);

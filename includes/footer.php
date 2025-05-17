@@ -20,7 +20,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="container">
         <div class="footer-content">
             <div class="footer-logo">
-                <h3>Culinary Delights</h3>
+                <h3>Timplado de Platito</h3>
                 <p>Discover, share, and enjoy delicious recipes from around the world.</p>
             </div>
             <div class="footer-links">
@@ -40,7 +40,7 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; <?php echo date("Y"); ?> Culinary Delights. All rights reserved.</p>
+            <p>&copy; <?php echo date("Y"); ?> Timplado de Platito. All rights reserved.</p>
             <ul class="social-media">
                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>
@@ -58,5 +58,7 @@ if (session_status() == PHP_SESSION_NONE) {
 </footer>
 
 <script src="<?php echo $rootPath; ?>assets/js/scripts.js"></script>
+<script src="<?php echo $rootPath; ?>assets/js/pagination.js"></script>
+<script src="<?php echo $rootPath; ?>assets/js/action-buttons.js"></script>
 </body>
 </html>

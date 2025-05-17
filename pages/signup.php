@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="../assets/fonts/fonts.css">
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <title>Sign Up - Culinary Delights</title>
+    <title>Sign Up - Timplado de Platito</title>
 </head>
 <body>
     <?php include('../includes/header.php'); ?>

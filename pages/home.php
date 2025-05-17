@@ -61,12 +61,19 @@ include('../includes/header.php');
                         echo '<span><i class="fas fa-signal"></i> ' . htmlspecialchars($recipeItem['difficulty']) . '</span>';
                     }
                     
-                    if (!empty($recipeItem['prep_time'])) {
-                        echo '<span><i class="far fa-clock"></i> Prep: ' . htmlspecialchars($recipeItem['prep_time']) . ' min</span>';
-                    }
-                    
-                    if (!empty($recipeItem['cook_time'])) {
-                        echo '<span><i class="fas fa-fire"></i> Cook: ' . htmlspecialchars($recipeItem['cook_time']) . ' min</span>';
+                    // Display prep and cook time on one line if both exist
+                    if (!empty($recipeItem['prep_time']) || !empty($recipeItem['cook_time'])) {
+                        echo '<span><i class="far fa-clock"></i> ';
+                        
+                        if (!empty($recipeItem['prep_time']) && !empty($recipeItem['cook_time'])) {
+                            echo 'Prep: ' . htmlspecialchars($recipeItem['prep_time']) . ' min | Cook: ' . htmlspecialchars($recipeItem['cook_time']) . ' min';
+                        } else if (!empty($recipeItem['prep_time'])) {
+                            echo 'Prep: ' . htmlspecialchars($recipeItem['prep_time']) . ' min';
+                        } else if (!empty($recipeItem['cook_time'])) {
+                            echo 'Cook: ' . htmlspecialchars($recipeItem['cook_time']) . ' min';
+                        }
+                        
+                        echo '</span>';
                     }
                     
                     echo '</p>

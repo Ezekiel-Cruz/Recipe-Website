@@ -59,9 +59,10 @@ if ($recipeId) {
                 <div class="recipe-header">
                     <h1 class="recipe-title"><?php echo htmlspecialchars($recipeDetails['title']); ?></h1>
                     
+                    <!-- All meta items in one horizontal row -->
                     <div class="recipe-meta">
                         <span class="recipe-meta-item"><i class="far fa-calendar-alt"></i> <?php echo $createdDate; ?></span>
-                        <span class="recipe-meta-item"><i class="far fa-user"></i> By <a href="<?php echo $rootPath; ?>pages/profile.php?id=<?php echo $authorId; ?>"><?php echo htmlspecialchars($author); ?></a></span>
+                        <span class="recipe-meta-item"><i class="far fa-user"></i> By: <?php echo htmlspecialchars ($author); ?></span>
                         <span class="recipe-meta-item"><i class="fas fa-hourglass-start"></i> Prep: <?php echo $prepTime; ?> mins</span>
                         <span class="recipe-meta-item"><i class="far fa-clock"></i> Cook: <?php echo $cookTime; ?> mins</span>
                         <span class="recipe-meta-item"><i class="fas fa-utensils"></i> <?php echo $servings; ?> servings</span>
@@ -89,19 +90,18 @@ if ($recipeId) {
                     </div>
                 </div>
                 
-                <div class="recipe-actions">
-                    <!-- Rating removed as requested -->
-                </div>
                 
                 <div class="recipe-content">
                     <div class="recipe-ingredients">
                         <h2><i class="fas fa-list"></i> Ingredients</h2>
                         <ul class="ingredients-list">
-                            <?php foreach (explode(',', $recipeDetails['ingredients']) as $ingredient): ?>
+                            <?php foreach (explode("\n", $recipeDetails['ingredients']) as $ingredient): ?>
+                                <?php if(trim($ingredient) !== ''): ?>
                                 <li>
                                     <i class="fas fa-check-circle"></i>
                                     <?php echo htmlspecialchars(trim($ingredient)); ?>
                                 </li>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </ul>
                     </div>
@@ -199,13 +199,6 @@ if ($recipeId) {
                         error_log($e->getMessage());
                     }
                     ?>
-                </div>
-            </div>
-            
-            <div class="related-recipes">
-                <h2>You Might Also Like</h2>
-                <div class="recipe-list">
-                    <!-- Related recipes will be loaded dynamically from the database -->
                 </div>
             </div>
         </div>

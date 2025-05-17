@@ -1,0 +1,86 @@
+/* Center recipe name and fix button positions for profile page */
+
+/* Center recipe title */
+.recipe-body h3 {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+/* Profile page specific button styling */
+.profile-container .recipe-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 0 10px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+/* Style buttons like in the image */
+.profile-container .recipe-actions .btn-outline,
+.profile-container .recipe-actions .btn-edit,
+.profile-container .recipe-actions .btn-delete {
+    flex: 1;
+    min-width: 75px;
+    padding: 8px 5px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin: 0;
+}
+
+/* View button (green outline) */
+.profile-container .recipe-actions .btn-outline {
+    color: #4CAF50 !important;
+    border: 1px solid #4CAF50;
+}
+
+/* Edit button (blue outline) */
+.profile-container .recipe-actions .btn-edit {
+    color: #2196F3 !important;
+    border: 1px solid #2196F3;
+}
+
+/* Delete button (red outline) */
+.profile-container .recipe-actions .btn-delete {
+    color: #F44336 !important;
+    border: 1px solid #F44336;
+}
+
+/* Fix icon alignment */
+.profile-container .recipe-actions a i {
+    margin-right: 4px;
+    font-size: 0.85rem;
+}
+
+/* Center difficulty badge */
+.profile-container .recipe-meta {
+    text-align: center;
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Time information display */
+.profile-container .recipe-meta span {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-container .recipe-meta span i {
+    margin-right: 5px;
+    color: #4CAF50;
+}

@@ -1,0 +1,78 @@
+/* Pagination styles */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.pagination {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px; /* More consistent spacing */
+}
+
+.pagination li {
+    margin: 0; /* Remove margin in favor of gap */
+}
+
+.pagination li a,
+.pagination li span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    color: var(--text-color);
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--spacing-xxs); /* Slightly reduced radius to match design */
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-weight: 500; /* Slightly bolder font */
+}
+
+.pagination li a:hover {
+    background-color: var(--background-lighter);
+    border-color: var(--border-hover);
+}
+
+.pagination li.active span {
+    background-color: var(--secondary-color); /* Red color matching the design */
+    color: var(--white);
+    border-color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.pagination .previous a,
+.pagination .next a,
+.pagination .previous span,
+.pagination .next span {
+    width: 38px; /* Fixed width to match other buttons */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination .disabled span {
+    color: var(--disabled-color);
+    background-color: var(--background-light);
+    cursor: not-allowed;
+    border-color: var(--border-light);
+}
+
+/* Responsive pagination */
+@media (max-width: 768px) {
+    .pagination li:not(.active):not(.previous):not(.next) {
+        display: none;
+    }
+    
+    .pagination li.active {
+        display: flex;
+    }
+}

@@ -1,0 +1,102 @@
+/* Fixes for recipe action buttons */
+
+.recipe-actions {
+    display: flex;
+    margin-top: 15px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.recipe-actions .btn-outline {
+    padding: 8px 12px;
+    text-align: center;
+    background-color: #fff;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    font-weight: 500;
+    flex-basis: 40%;
+}
+
+.recipe-actions .btn-outline:hover {
+    background-color: #4CAF50;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.recipe-actions .btn-edit,
+.recipe-actions .btn-delete {
+    padding: 8px 12px;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s;
+    flex-basis: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipe-actions .btn-edit {
+    background-color: #fafafa;
+    color: #2196F3;
+    border: 1px solid #2196F3;
+}
+
+.recipe-actions .btn-edit:hover {
+    background-color: #2196F3;
+    color: white;
+}
+
+.recipe-actions .btn-delete {
+    background-color: #fafafa;
+    color: #F44336;
+    border: 1px solid #F44336;
+}
+
+.recipe-actions .btn-delete:hover {
+    background-color: #F44336;
+    color: white;
+}
+
+/* Small screen fix */
+@media (max-width: 600px) {
+    .recipe-actions {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .recipe-actions .btn-outline {
+        flex-basis: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .recipe-actions .btn-edit,
+    .recipe-actions .btn-delete {
+        flex-basis: calc(50% - 5px);
+    }
+}
+
+@media (max-width: 480px) {
+    .recipe-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .recipe-actions .btn-outline,
+    .recipe-actions .btn-edit,
+    .recipe-actions .btn-delete {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+    
+    .btn-edit-profile {
+        width: 100%;
+    }
+}

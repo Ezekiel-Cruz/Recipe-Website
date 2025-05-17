@@ -1,0 +1,218 @@
+/* Enhanced styling for profile page */
+
+/* Edit Profile Button */
+.edit-profile-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.edit-profile-btn i {
+    margin-right: 8px;
+}
+
+.edit-profile-btn:hover {
+    background-color: #388E3C;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Enhanced Modal Styles */
+.modal-content {
+    background-color: #fff;
+    margin: 10vh auto;
+    padding: 25px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    animation: modalFade 0.3s;
+}
+
+.modal-content h2 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* Form Improvements */
+.edit-profile-form .form-group {
+    margin-bottom: 20px;
+}
+
+.edit-profile-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.edit-profile-form input,
+.edit-profile-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.edit-profile-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.form-actions .btn:hover {
+    background-color: #388E3C;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* Enhanced Recipe Card Styling */
+.recipe-body {
+    padding: 18px;
+}
+
+.recipe-body h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.recipe-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.recipe-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.recipe-meta i {
+    margin-right: 5px;
+    color: #4CAF50;
+}
+
+/* Empty recipes state enhancement */
+.empty-recipes {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 2px dashed #ddd;
+    margin-top: 30px;
+}
+
+.empty-recipes p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.empty-recipes .btn-primary {
+    padding: 12px 25px;
+    font-weight: 500;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.recipe-card {
+    animation: fadeIn 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Staggered animation for recipe cards */
+.recipe-grid .recipe-card:nth-child(1) { animation-delay: 0.1s; }
+.recipe-grid .recipe-card:nth-child(2) { animation-delay: 0.2s; }
+.recipe-grid .recipe-card:nth-child(3) { animation-delay: 0.3s; }
+.recipe-grid .recipe-card:nth-child(4) { animation-delay: 0.4s; }
+.recipe-grid .recipe-card:nth-child(5) { animation-delay: 0.5s; }
+.recipe-grid .recipe-card:nth-child(6) { animation-delay: 0.6s; }
+.recipe-grid .recipe-card:nth-child(7) { animation-delay: 0.7s; }
+.recipe-grid .recipe-card:nth-child(8) { animation-delay: 0.8s; }
+
+/* Category badge animation on hover */
+.category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+}
+
+.recipe-card:hover .category-badge {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Mobile responsiveness improvements */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 15px;
+    }
+    
+    .recipe-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 15px;
+    }
+    
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    .edit-profile-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}

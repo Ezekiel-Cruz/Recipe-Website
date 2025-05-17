@@ -1,0 +1,92 @@
+/* New Category Cards Design */
+.categories-container {
+    margin: 2rem 0;
+}
+
+.categories-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.category-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    width: calc(25% - 15px);
+    margin-bottom: 15px;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-card a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 30px;
+    text-decoration: none;
+    color: var(--dark-color);
+    height: 100%;
+}
+
+.category-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    background-color: transparent;
+}
+
+.category-icon i {
+    font-size: 1.1rem;
+    color: #ff6b6b;
+}
+
+.category-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.category-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 2px;
+}
+
+.recipe-count {
+    color: #95a5a6;
+    font-size: 0.75rem;
+}
+
+.category-card.active {
+    background-color: #f8f9fa;
+    border-left: 3px solid #ff6b6b;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .category-card {
+        width: calc(33.33% - 15px);
+    }
+}
+
+@media (max-width: 992px) {
+    .category-card {
+        width: calc(50% - 15px);
+    }
+}
+
+@media (max-width: 576px) {
+    .category-card {
+        width: 100%;
+    }
+}

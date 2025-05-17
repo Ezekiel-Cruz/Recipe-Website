@@ -594,16 +594,7 @@ button:hover, .btn:hover {
     line-height: 1.6;
 }
 
-/* Related recipes section */
-.related-recipes {
-    margin-bottom: 60px;
-}
-
-.related-recipes h2 {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-    text-align: center;
-}
+/* Removed related recipes section */
 
 /* Responsive adjustments */
 @media (max-width: 992px) {

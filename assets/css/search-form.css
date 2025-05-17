@@ -1,0 +1,135 @@
+/* Search Form Styles */
+.search-container {
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.search-form {
+    width: 100%;
+}
+
+.search-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.search-field {
+    flex: 1;
+}
+
+.search-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #2d3436;
+}
+
+.search-field input,
+.search-field select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    height: 45px;
+    box-sizing: border-box;
+}
+
+.search-field input:focus,
+.search-field select:focus {
+    border-color: #ff6b6b;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+
+.search-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    white-space: nowrap;
+}
+
+.search-btn {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    height: 45px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 90px;
+}
+
+.search-btn:hover {
+    background-color: #ff5252;
+}
+
+.reset-btn {
+    background-color: transparent;
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    padding: 12px 20px;
+    border-radius: 8px;
+    height: 45px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    box-sizing: border-box;
+}
+
+.reset-btn:hover {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+/* Search results info */
+.search-info {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 4px solid #ff6b6b;
+}
+
+.search-info p {
+    margin: 5px 0;
+    color: #2d3436;
+}
+
+.search-info strong {
+    color: #ff6b6b;
+}
+
+/* Responsive styling */
+@media (max-width: 992px) {
+    .search-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .search-field {
+        width: 100%;
+    }
+    
+    .search-buttons {
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .search-btn,
+    .reset-btn {
+        width: 48%;
+    }
+}
