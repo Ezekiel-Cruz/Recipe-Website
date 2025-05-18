@@ -1,42 +1,57 @@
-# Recipe Website
+# Timplado de Platito
 
-## Overview
-This is a modern recipe website that allows users to browse, add, and manage recipes. The website includes features such as user authentication, recipe categories, and a user profile section.
+Timplado de Platito is a culinary platform for food enthusiasts. Users can browse, share, and manage recipes from various cuisines around the world. You can access the online version here: [https://timplado-de-platito.great-site.net/](https://timplado-de-platito.great-site.net/)
 
 ## Features
-- **Home**: Displays featured recipes and categories.
-- **Add Recipe**: A form for users to submit new recipes with details like:
-  - Title, ingredients, instructions
-  - Difficulty level, preparation time, cooking time
-  - Images and notes
-- **Recipes & Categories**: Combined interface to browse all recipes and filter by category.
-- **My Profile**: Shows user profile information and submitted recipes.
-- **Login**: Allows users to log into their accounts.
-- **Sign Up**: Registration form for new users.
 
-## Project Structure
+- Browse, search, and share recipes
+- Submit your own culinary creations with detailed instructions
+- Categorize recipes by cuisine type and difficulty level
+- User profiles with saved favorites and recipe collections
+- Recipe details with preparation time, cooking time, and servings information
+- Responsive design for desktop
+
+## Setup Instructions
+
+### 1. Clone the Repository
 ```
-recipe-website
-├── assets
-│   ├── css
-│   │   ├── main.css
-│   │   ├── styles.css
-│   │   ├── alerts.css
-│   │   └── recipes.css
-│   ├── js
-│   │   └── scripts.js
-│   └── fonts
-│       └── fonts.css
-├── config
-│   └── database.php
-├── database
-│   ├── schema.sql
-│   └── init_db.php
-├── includes
+git clone <https://github.com/Ezekiel-Cruz/Recipe-Website.git>
+cd Recipe-Website
+```
+
+### 2. Database Setup
+You have two options to populate the database:
+- Manually import the SQL schema: `mysql -u root < database/schema.sql`
+- Create your own recipes through the web interface
+
+### 3. Configure Database Connection
+Edit `config/database.php` with your MySQL credentials.
+
+### 4. Run the Project
+- Place the project in your web server's root (e.g., htdocs for XAMPP)
+- Access via http://localhost/Recipe-Website/
+
+### 5. Default Login
+After installation, you can login with the default test account:
+- Username: test_user
+- Password: password123
+
+## Directory Structure
+
+```
+Recipe-Website/
+├── /assets           - CSS, JS, images, and fonts
+│   ├── /css          - Various CSS files for styling
+│   ├── /js           - JavaScript files
+│   ├── /img          - Images used across the site
+│   └── /fonts        - Custom fonts
+├── /config           - Database configuration
+├── /database         - SQL schema and initialization scripts
+├── /includes         - Shared PHP components
 │   ├── header.php
 │   ├── footer.php
 │   └── functions.php
-├── pages
+├── /pages            - Main application pages
 │   ├── home.php
 │   ├── add-recipe.php
 │   ├── recipes-categories.php
@@ -45,67 +60,44 @@ recipe-website
 │   ├── signup.php
 │   ├── recipe-detail.php
 │   └── edit-recipe.php
-├── uploads
-│   └── recipes
-├── classes
+├── /uploads          - User-uploaded content
+├── /classes          - OOP class definitions
 │   ├── User.php
 │   ├── Recipe.php
 │   └── Category.php
-├── api
-│   └── recipes.php
-├── index.php
-├── .htaccess
-└── README.md
+├── /api              - API endpoints
+└── index.php         - Main entry point
 ```
-
-## Installation
-1. Clone the repository to your local machine.
-2. Set up a database using one of these methods:
-   - Run the provided database initialization script: `php database/init_db.php`
-   - Manually import the SQL schema: `mysql -u root < database/schema.sql`
-3. Update the `config/database.php` file with your database credentials if different from defaults.
-4. Run the application on a local server (e.g., XAMPP, WAMP).
-5. Access the website via your browser at `http://localhost/recipe-website`.
-
-## Default Login
-After installation, you can login with the default test account:
-- Username: test_user
-- Password: password123
-
-## Usage
-- Users can sign up for an account or log in to access their profiles.
-- Users can add new recipes, view recipes by category, and manage their submitted recipes.
 
 ## Recent Updates
 
-### Profile System Fixes and Improvements (May 2025)
-- **Removed profile image system** to simplify the user experience and reduce potential bugs
-- **Enhanced profile page styling** with improved cards and animations
-- **Fixed alignment** of edit and delete buttons in the profile page
-- **Improved mobile responsiveness** across the profile system
-- **Cleaned up codebase** by removing duplicate files and redundant code
-- **Added modern styling** to the edit profile modal and forms
+### Profile System Improvements (May 2025)
+- Enhanced profile page styling with improved cards and animations
+- Fixed alignment of recipe management buttons
+- Added modern styling to the edit profile forms
 
-### Previous Updates
-- Reorganized database files into a dedicated `database` directory
-- Added automated database initialization script (`init_db.php`)
-- Combined all SQL schema into a single consolidated file
+### Recipe Display Enhancements
+- Enhanced recipe display with metadata (difficulty, prep/cook time, servings)
 - Combined recipes and categories browsing into a single interface
-- Enhanced recipe display with metadata (difficulty, prep/cook time, servings, etc.)
 - Added Popular Categories section with animation effects
-- Made both Recipe Categories and Popular Categories sections responsive and equal in size
-- Moved CSS to dedicated files for better organization
-- Added back-to-top button for better user experience
-- Updated navigation links in header and footer
-- Removed duplicate files and functions
+- Improved recipe cards with consistent sizing and responsive design
 
-## Class-Based Design
-The application is moving towards a class-based architecture:
-- `Recipe` class for recipe management
-- `User` class for user authentication and profiles
-- `Category` class for recipe categorization
+### Class-Based Architecture
+- `Recipe` class for recipe management and search
+- `User` class for authentication, profiles, and favorites
+- `Category` class for organizing recipes by cuisine
 
-Legacy procedural functions are still available in `includes/functions.php` for backward compatibility.
+### Front-End Features
+- Responsive design that works on desktop
+- Modern UI with animation effects
+- Intuitive recipe browsing and searching
+- Clean, user-friendly forms for recipe submission
+
+### Back-End Features
+- Secure user authentication system
+- Efficient database schema for recipes and categories
+- Image upload and management for recipes
+- Search functionality across recipe database
 
 ## Contributing
 Feel free to fork the repository and submit pull requests for any improvements or features you'd like to add.
