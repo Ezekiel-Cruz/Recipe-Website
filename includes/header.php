@@ -18,6 +18,7 @@ if ($pagesCount > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timplado de Platito</title>
+    <link rel="icon" href="<?php echo $rootPath; ?>assets/img/favlogo.png" type="image/png">
     <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/fonts/fonts.css">
     <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/css/main.css">
     <link rel="stylesheet" href="<?php echo $rootPath; ?>assets/css/styles.css">
@@ -44,7 +45,9 @@ if ($pagesCount > 0) {
 <body>
     <header>
         <div class="header-container">
-            <a href="<?php echo $rootPath; ?>pages/home.php" class="logo">Timplado de Platito</a>
+            <a href="<?php echo $rootPath; ?>pages/home.php" class="logo">
+                <img src="<?php echo $rootPath; ?>assets/img/favlogo.png" alt="Site Logo" class="header-logo-img">
+                Timplado de Platito</a>
             <nav>
                 <ul>
                     <li><a href="<?php echo $rootPath; ?>pages/home.php"><i class="fas fa-home"></i> Home</a></li>
