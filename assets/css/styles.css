@@ -40,10 +40,18 @@ header {
 }
 
 .logo {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: var(--primary-color);
     text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo-img {
+    height: 30px;
+    width: auto;
+    margin-right: 10px;
 }
 
 nav {
